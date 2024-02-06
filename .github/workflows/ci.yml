@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/ci.yml"
+      - "**/*.swift"
+  workflow_dispatch:
+
+concurrency:
+  group: "ci-${{ github.head_ref || github.run_id }}"
+  cancel-in-progress: true
+
+jobs:
+  build-test:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    container: swift:5.9.2-jammy
+    steps:
+      - name: Install OS Updates
+        run: |
+          export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true
+          apt-get -q update
+          apt-get -q dist-upgrade -y
+          apt-get install -y libjemalloc-dev
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: .build
+          key: ${{ runner.os }}-spm-${{ hashFiles('Package.resolved') }}
+          restore-keys: |
+            ${{ runner.os }}-spm-
+
+      - name: Resolve Dependencies
+        run: |
+          swift package resolve --skip-update \
+          $([ -f ./Package.resolved ] && echo "--force-resolved-versions" || true)
+
+      - name: Build
+        run: swift build -Xlinker -ljemalloc -Xswiftc -warnings-as-errors --build-tests
+
+      - name: Test
+        run: swift test --skip-build --parallel
