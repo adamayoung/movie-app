@@ -1,0 +1,10 @@
+#extend("master"):
+    #export("body"):
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Movie Database</h1>
+            <p class="lead">Find everything about Movies, TV Series and Actors.</p>
+        </div>
+    </div>
+    #endexport
+#endextend

@@ -1,5 +1,5 @@
 //
-//  APITests.swift
+//  CertificationContextMapper.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,20 +17,18 @@
 //  limitations under the License.
 //
 
-@testable import API
-import XCTVapor
+import Foundation
+import MovieDomain
 
-final class APITests: XCTestCase {
+struct CertificationContextMapper {
 
-    func testHelloWorld() async throws {
-        let app = Application(.testing)
-        defer { app.shutdown() }
-        try await configure(app)
+    private init() {}
 
-        try app.test(.GET, "hello", afterResponse: { res in
-            XCTAssertEqual(res.status, .ok)
-            XCTAssertEqual(res.body.string, "Hello, world!")
-        })
+    static func map(_ model: Certification) -> CertificationContext {
+        CertificationContext(
+            code: model.code,
+            meaning: model.meaning
+        )
     }
 
 }

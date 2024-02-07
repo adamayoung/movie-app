@@ -1,5 +1,5 @@
 //
-//  entrypoint.swift
+//  DataSourceFactory.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,29 +17,23 @@
 //  limitations under the License.
 //
 
-import Logging
-import Vapor
+import Foundation
+import MovieData
+import MovieDomain
+import TMDb
 
-@main
-enum Entrypoint {
+final class DataSourceFactory {
 
-    static func main() async throws {
-        var env = try Environment.detect()
-        try LoggingSystem.bootstrap(from: &env)
+    func certificationDataSource() -> some CertificationDataSource {
+        CertificationTMDbDataSource(certificationService: certificationTMDbService())
+    }
 
-        let app = Application(env)
-        defer {
-            app.shutdown()
-        }
+}
 
-        do {
-            try await configure(app)
-        } catch {
-            app.logger.report(error: error)
-            throw error
-        }
+extension DataSourceFactory {
 
-        try await app.execute()
+    private func certificationTMDbService() -> some CertificationTMDbService {
+        CertificationService()
     }
 
 }

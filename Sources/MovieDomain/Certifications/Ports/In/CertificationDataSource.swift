@@ -1,5 +1,5 @@
 //
-//  entrypoint.swift
+//  CertificationDataSource.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,29 +17,12 @@
 //  limitations under the License.
 //
 
-import Logging
-import Vapor
+import Foundation
 
-@main
-enum Entrypoint {
+public protocol CertificationDataSource {
 
-    static func main() async throws {
-        var env = try Environment.detect()
-        try LoggingSystem.bootstrap(from: &env)
+    func movieCertifications() async throws -> [String: [Certification]]
 
-        let app = Application(env)
-        defer {
-            app.shutdown()
-        }
-
-        do {
-            try await configure(app)
-        } catch {
-            app.logger.report(error: error)
-            throw error
-        }
-
-        try await app.execute()
-    }
+    func tvSeriesCertifications() async throws -> [String: [Certification]]
 
 }

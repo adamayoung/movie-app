@@ -1,5 +1,5 @@
 //
-//  entrypoint.swift
+//  CertificationsDTOMapper.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,29 +17,17 @@
 //  limitations under the License.
 //
 
-import Logging
-import Vapor
+import Foundation
+import MovieDomain
 
-@main
-enum Entrypoint {
+struct CertificationsDTOMapper {
 
-    static func main() async throws {
-        var env = try Environment.detect()
-        try LoggingSystem.bootstrap(from: &env)
+    private init() {}
 
-        let app = Application(env)
-        defer {
-            app.shutdown()
+    static func map(_ model: [String: [Certification]]) -> [String: [CertificationDTO]] {
+        model.mapValues { certifications in
+            certifications.map(CertificationDTOMapper.map)
         }
-
-        do {
-            try await configure(app)
-        } catch {
-            app.logger.report(error: error)
-            throw error
-        }
-
-        try await app.execute()
     }
 
 }

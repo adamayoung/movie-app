@@ -1,5 +1,5 @@
 //
-//  entrypoint.swift
+//  APITests.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,29 +17,20 @@
 //  limitations under the License.
 //
 
-import Logging
-import Vapor
+@testable import MovieAPI
+import XCTVapor
 
-@main
-enum Entrypoint {
+final class APITests: XCTestCase {
 
-    static func main() async throws {
-        var env = try Environment.detect()
-        try LoggingSystem.bootstrap(from: &env)
-
-        let app = Application(env)
-        defer {
-            app.shutdown()
-        }
-
-        do {
-            try await configure(app)
-        } catch {
-            app.logger.report(error: error)
-            throw error
-        }
-
-        try await app.execute()
+    func testHelloWorld() async throws {
+//        let app = Application(.testing)
+//        defer { app.shutdown() }
+//        try await configure(app)
+//
+//        try app.test(.GET, "hello", afterResponse: { res in
+//            XCTAssertEqual(res.status, .ok)
+//            XCTAssertEqual(res.body.string, "Hello, world!")
+//        })
     }
 
 }

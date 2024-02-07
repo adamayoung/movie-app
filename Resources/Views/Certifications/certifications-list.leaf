@@ -1,0 +1,28 @@
+#extend("master"):
+    #export("body"):
+        <h2 class="page-header">Certifications</h2>
+
+        #for(countryGroup in countryGroups):
+            <h3>#(countryGroup.countryCode)</h3>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Country</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        #for(certification in countryGroup.certifications):
+                            <tr>
+                                <td>#(certification.code)</td>
+                                <td>#(certification.meaning)</td>
+                            </tr>
+                        #endfor
+                    </tbody>
+                </table>
+            </div>
+        #endfor
+    #endexport
+#endextend

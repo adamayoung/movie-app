@@ -1,5 +1,5 @@
 //
-//  entrypoint.swift
+//  FetchMovieCertifications.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,29 +17,20 @@
 //  limitations under the License.
 //
 
-import Logging
-import Vapor
+import Foundation
 
-@main
-enum Entrypoint {
+final class FetchMovieCertifications: FetchMovieCertificationsUseCase {
 
-    static func main() async throws {
-        var env = try Environment.detect()
-        try LoggingSystem.bootstrap(from: &env)
+    private let dataSource: any CertificationDataSource
 
-        let app = Application(env)
-        defer {
-            app.shutdown()
-        }
+    init(dataSource: some CertificationDataSource) {
+        self.dataSource = dataSource
+    }
 
-        do {
-            try await configure(app)
-        } catch {
-            app.logger.report(error: error)
-            throw error
-        }
+    func execute() async throws -> [String: [Certification]] {
+        let certifications = try await dataSource.movieCertifications()
 
-        try await app.execute()
+        return certifications
     }
 
 }

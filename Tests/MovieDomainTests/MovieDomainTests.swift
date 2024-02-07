@@ -1,5 +1,5 @@
 //
-//  entrypoint.swift
+//  MovieDomainTests.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,29 +17,11 @@
 //  limitations under the License.
 //
 
-import Logging
-import Vapor
+@testable import MovieDomain
+import XCTest
 
-@main
-enum Entrypoint {
+final class MovieDomainTests: XCTestCase {
 
-    static func main() async throws {
-        var env = try Environment.detect()
-        try LoggingSystem.bootstrap(from: &env)
-
-        let app = Application(env)
-        defer {
-            app.shutdown()
-        }
-
-        do {
-            try await configure(app)
-        } catch {
-            app.logger.report(error: error)
-            throw error
-        }
-
-        try await app.execute()
-    }
+    func test() {}
 
 }

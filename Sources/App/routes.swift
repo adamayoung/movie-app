@@ -1,5 +1,5 @@
 //
-//  entrypoint.swift
+//  routes.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,29 +17,17 @@
 //  limitations under the License.
 //
 
-import Logging
+import MovieAPI
+import MovieData
+import MovieDomain
+import TMDb
 import Vapor
 
-@main
-enum Entrypoint {
+func routes(_ app: Application) throws {
+    let useCaseFactory = UseCaseFactory()
 
-    static func main() async throws {
-        var env = try Environment.detect()
-        try LoggingSystem.bootstrap(from: &env)
+    try webRoutes(app, useCaseFactory: useCaseFactory)
 
-        let app = Application(env)
-        defer {
-            app.shutdown()
-        }
-
-        do {
-            try await configure(app)
-        } catch {
-            app.logger.report(error: error)
-            throw error
-        }
-
-        try await app.execute()
-    }
-
+    let api = app.grouped("api")
+    try apiRoutes(api, useCaseFactory: useCaseFactory)
 }

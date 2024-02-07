@@ -1,5 +1,5 @@
 //
-//  configure.swift
+//  apiRoutes.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,13 +17,15 @@
 //  limitations under the License.
 //
 
+import MovieAPI
 import Vapor
 
-// configures your application
-public func configure(_ app: Application) async throws {
-    // uncomment to serve files from /Public folder
-    // app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
-
-    // register routes
-    try routes(app)
+func apiRoutes(_ app: RoutesBuilder, useCaseFactory: UseCaseFactory) throws {
+    // Certifications
+    try app.register(
+        collection: CertificationsAPIController(
+            fetchMovieCertificationsUseCase: useCaseFactory.fetchMovieCertificationsUseCase(),
+            fetchTVSeriesCertificationsUseCase: useCaseFactory.fetchTVSeriesCertificationsUseCase()
+        )
+    )
 }

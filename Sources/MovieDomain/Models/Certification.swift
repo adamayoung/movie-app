@@ -1,5 +1,5 @@
 //
-//  entrypoint.swift
+//  Certification.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,29 +17,23 @@
 //  limitations under the License.
 //
 
-import Logging
-import Vapor
+import Foundation
 
-@main
-enum Entrypoint {
+public struct Certification: Identifiable, Equatable {
 
-    static func main() async throws {
-        var env = try Environment.detect()
-        try LoggingSystem.bootstrap(from: &env)
+    public var id: String { code }
+    public let code: String
+    public let meaning: String
+    public let order: Int
 
-        let app = Application(env)
-        defer {
-            app.shutdown()
-        }
-
-        do {
-            try await configure(app)
-        } catch {
-            app.logger.report(error: error)
-            throw error
-        }
-
-        try await app.execute()
+    public init(
+        code: String,
+        meaning: String,
+        order: Int
+    ) {
+        self.code = code
+        self.meaning = meaning
+        self.order = order
     }
 
 }

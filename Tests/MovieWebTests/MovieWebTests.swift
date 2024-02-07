@@ -1,5 +1,5 @@
 //
-//  routes.swift
+//  MovieWebTests.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,14 +17,11 @@
 //  limitations under the License.
 //
 
-import Vapor
+@testable import MovieWeb
+import XCTVapor
 
-func routes(_ app: Application) throws {
-    app.get { _ async in
-        "It works!"
-    }
+final class MovieWebTests: XCTestCase {
 
-    app.get("hello") { _ async -> String in
-        "Hello, world!"
-    }
+    func testHelloWorld() async throws {}
+
 }

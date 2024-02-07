@@ -1,5 +1,5 @@
 //
-//  entrypoint.swift
+//  CertificationsMapper.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,29 +17,18 @@
 //  limitations under the License.
 //
 
-import Logging
-import Vapor
+import Foundation
+import MovieDomain
+import TMDb
 
-@main
-enum Entrypoint {
+struct CertificationsMapper {
 
-    static func main() async throws {
-        var env = try Environment.detect()
-        try LoggingSystem.bootstrap(from: &env)
+    private init() {}
 
-        let app = Application(env)
-        defer {
-            app.shutdown()
+    static func map(_ model: [String: [TMDb.Certification]]) -> [String: [MovieDomain.Certification]] {
+        model.mapValues { certifications in
+            certifications.map(CertificationMapper.map).sorted { $0.order < $1.order }
         }
-
-        do {
-            try await configure(app)
-        } catch {
-            app.logger.report(error: error)
-            throw error
-        }
-
-        try await app.execute()
     }
 
 }
