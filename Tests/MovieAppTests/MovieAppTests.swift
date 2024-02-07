@@ -1,5 +1,5 @@
 //
-//  CertificationContextMapperTests.swift
+//  MovieAppTests.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,23 +17,7 @@
 //  limitations under the License.
 //
 
-import MovieDomain
-@testable import MovieWeb
-import XCTest
+@testable import MovieApp
+import XCTVapor
 
-final class CertificationContextMapperTests: XCTestCase {
-
-    func testMap() {
-        let certification = Certification(
-            code: "ABC",
-            meaning: "ABC meaning",
-            order: 2
-        )
-
-        let result = CertificationContextMapper.map(certification)
-
-        XCTAssertEqual(result.code, certification.code)
-        XCTAssertEqual(result.meaning, certification.meaning)
-    }
-
-}
+final class MovieAppTests: XCTestCase {}

@@ -1,5 +1,5 @@
 //
-//  AppTests.swift
+//  apiRoutes.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,7 +17,9 @@
 //  limitations under the License.
 //
 
-@testable import App
-import XCTVapor
+import Vapor
 
-final class AppTests: XCTestCase {}
+func apiRoutes(_ app: RoutesBuilder, apiFactory: APIFactory) throws {
+    // Certifications
+    try app.register(collection: apiFactory.certificationsAPIController)
+}

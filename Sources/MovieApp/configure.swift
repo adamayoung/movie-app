@@ -30,7 +30,11 @@ func configure(_ app: Application) async throws {
 
     app.views.use(.leaf)
 
-    try routes(app)
+    let tmdbFactory = TMDbFactory()
+    let dataSourceFactory = DataSourceFactory(tmdbFactory: tmdbFactory)
+    let domainFactory = DomainFactory(dataSourceFactory: dataSourceFactory)
+
+    try routes(app, domainFactory: domainFactory)
 }
 
 private func configureTMDb(_ app: Application) {

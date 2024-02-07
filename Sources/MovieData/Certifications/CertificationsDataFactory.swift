@@ -1,5 +1,5 @@
 //
-//  routes.swift
+//  CertificationsDataFactory.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,17 +17,19 @@
 //  limitations under the License.
 //
 
-import MovieAPI
-import MovieData
+import Foundation
 import MovieDomain
-import TMDb
-import Vapor
 
-func routes(_ app: Application) throws {
-    let useCaseFactory = UseCaseFactory()
+public struct CertificationsDataFactory {
 
-    try webRoutes(app, useCaseFactory: useCaseFactory)
+    private let certificationProvider: any TMDbCertificationProvider
 
-    let api = app.grouped("api")
-    try apiRoutes(api, useCaseFactory: useCaseFactory)
+    public init(certificationProvider: some TMDbCertificationProvider) {
+        self.certificationProvider = certificationProvider
+    }
+
+    public func certificationDataSource() -> some CertificationDataSource {
+        CertificationTMDbDataSource(certificationProvider: certificationProvider)
+    }
+
 }

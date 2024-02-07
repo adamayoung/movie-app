@@ -1,5 +1,5 @@
 //
-//  CertificationContextMapperTests.swift
+//  WebFactory.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,23 +17,27 @@
 //  limitations under the License.
 //
 
+import Foundation
 import MovieDomain
-@testable import MovieWeb
-import XCTest
+import MovieWeb
 
-final class CertificationContextMapperTests: XCTestCase {
+final class WebFactory {
 
-    func testMap() {
-        let certification = Certification(
-            code: "ABC",
-            meaning: "ABC meaning",
-            order: 2
+    private let domainFactory: DomainFactory
+
+    init(domainFactory: DomainFactory) {
+        self.domainFactory = domainFactory
+    }
+
+    var homeController: HomeController {
+        HomeController()
+    }
+
+    var certificationsController: CertificationsController {
+        CertificationsController(
+            fetchMovieCertificationsUseCase: domainFactory.certifications.fetchMovieCertificationsUseCase(),
+            fetchTVSeriesCertificationsUseCase: domainFactory.certifications.fetchTVSeriesCertificationsUseCase()
         )
-
-        let result = CertificationContextMapper.map(certification)
-
-        XCTAssertEqual(result.code, certification.code)
-        XCTAssertEqual(result.meaning, certification.meaning)
     }
 
 }

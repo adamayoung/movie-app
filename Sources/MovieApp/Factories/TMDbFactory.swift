@@ -1,5 +1,5 @@
 //
-//  CertificationsFactory.swift
+//  TMDbFactory.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -18,21 +18,15 @@
 //
 
 import Foundation
+import MovieData
+import TMDb
 
-public struct CertificationsFactory {
+final class TMDbFactory {
 
-    private let certificationDataSource: any CertificationDataSource
+    init() {}
 
-    public init(certificationDataSource: some CertificationDataSource) {
-        self.certificationDataSource = certificationDataSource
-    }
-
-    public func fetchMovieCertificationsUseCase() -> some FetchMovieCertificationsUseCase {
-        FetchMovieCertifications(dataSource: certificationDataSource)
-    }
-
-    public func fetchTVSeriesCertificationsUseCase() -> some FetchTVSeriesCertificationsUseCase {
-        FetchTVSeriesCertifications(dataSource: certificationDataSource)
+    var tmdbCertificationProvider: some TMDbCertificationProvider {
+        CertificationService()
     }
 
 }

@@ -1,5 +1,5 @@
 //
-//  apiRoutes.swift
+//  webRoutes.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,15 +17,12 @@
 //  limitations under the License.
 //
 
-import MovieAPI
 import Vapor
 
-func apiRoutes(_ app: RoutesBuilder, useCaseFactory: UseCaseFactory) throws {
+func webRoutes(_ app: Application, webFactory: WebFactory) throws {
+    // Home
+    try app.register(collection: webFactory.homeController)
+
     // Certifications
-    try app.register(
-        collection: CertificationsAPIController(
-            fetchMovieCertificationsUseCase: useCaseFactory.fetchMovieCertificationsUseCase(),
-            fetchTVSeriesCertificationsUseCase: useCaseFactory.fetchTVSeriesCertificationsUseCase()
-        )
-    )
+    try app.register(collection: webFactory.certificationsController)
 }

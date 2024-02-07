@@ -39,14 +39,14 @@ public struct CertificationsAPIController: RouteCollection {
         certifications.get("tvseries", use: showTVSeries)
     }
 
-    func showMovies(request: Request) async throws -> RootDTO<[String: [CertificationDTO]]> {
+    func showMovies(request _: Request) async throws -> RootDTO<[String: [CertificationDTO]]> {
         let certifications = try await fetchMovieCertificationsUseCase.execute()
         let certificationDTOs = CertificationsDTOMapper.map(certifications)
 
         return RootDTO(data: certificationDTOs)
     }
 
-    func showTVSeries(request: Request) async throws -> RootDTO<[String: [CertificationDTO]]> {
+    func showTVSeries(request _: Request) async throws -> RootDTO<[String: [CertificationDTO]]> {
         let certifications = try await fetchTVSeriesCertificationsUseCase.execute()
         let certificationDTOs = CertificationsDTOMapper.map(certifications)
 

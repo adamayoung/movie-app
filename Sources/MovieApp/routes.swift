@@ -1,5 +1,5 @@
 //
-//  CertificationContextMapperTests.swift
+//  routes.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,23 +17,13 @@
 //  limitations under the License.
 //
 
-import MovieDomain
-@testable import MovieWeb
-import XCTest
+import Vapor
 
-final class CertificationContextMapperTests: XCTestCase {
+func routes(_ app: Application, domainFactory: DomainFactory) throws {
+    let webFactory = WebFactory(domainFactory: domainFactory)
+    try webRoutes(app, webFactory: webFactory)
 
-    func testMap() {
-        let certification = Certification(
-            code: "ABC",
-            meaning: "ABC meaning",
-            order: 2
-        )
-
-        let result = CertificationContextMapper.map(certification)
-
-        XCTAssertEqual(result.code, certification.code)
-        XCTAssertEqual(result.meaning, certification.meaning)
-    }
-
+    let apiFactory = APIFactory(domainFactory: domainFactory)
+    let api = app.grouped("api")
+    try apiRoutes(api, apiFactory: apiFactory)
 }

@@ -2,14 +2,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "MovieAPI",
+    name: "MovieApp",
 
     platforms: [
         .macOS(.v13)
     ],
 
     products: [
-        .executable(name: "App", targets: ["App"])
+        .executable(name: "MovieApp", targets: ["MovieApp"])
     ],
 
     dependencies: [
@@ -20,7 +20,7 @@ let package = Package(
 
     targets: [
         .executableTarget(
-            name: "App",
+            name: "MovieApp",
             dependencies: [
                 "MovieAPI",
                 "MovieWeb",
@@ -30,9 +30,9 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "AppTests",
+            name: "MovieAppTests",
             dependencies: [
-                .target(name: "App"),
+                .target(name: "MovieApp"),
                 .product(name: "XCTVapor", package: "vapor"),
                 .product(name: "Vapor", package: "vapor")
             ]

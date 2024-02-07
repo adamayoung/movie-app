@@ -1,5 +1,5 @@
 //
-//  webRoutes.swift
+//  DataSourceFactory.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,18 +17,23 @@
 //  limitations under the License.
 //
 
-import MovieWeb
-import Vapor
+import Foundation
+import MovieData
+import MovieDomain
+import TMDb
 
-func webRoutes(_ app: Application, useCaseFactory: UseCaseFactory) throws {
-    // Home
-    try app.register(collection: HomeController())
+final class DataSourceFactory {
 
-    // Certifications
-    try app.register(
-        collection: CertificationsController(
-            fetchMovieCertificationsUseCase: useCaseFactory.fetchMovieCertificationsUseCase(),
-            fetchTVSeriesCertificationsUseCase: useCaseFactory.fetchTVSeriesCertificationsUseCase()
-        )
-    )
+    private let tmdbFactory: TMDbFactory
+
+    init(tmdbFactory: TMDbFactory) {
+        self.tmdbFactory = tmdbFactory
+    }
+
+    var certifications: CertificationsDataFactory {
+        let certificationProvider = tmdbFactory.tmdbCertificationProvider
+
+        return CertificationsDataFactory(certificationProvider: certificationProvider)
+    }
+
 }

@@ -1,5 +1,5 @@
 //
-//  UseCaseFactory.swift
+//  DomainFactory.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -20,24 +20,18 @@
 import Foundation
 import MovieDomain
 
-final class UseCaseFactory {
+final class DomainFactory {
 
     private let dataSourceFactory: DataSourceFactory
 
-    private lazy var certificationsFactory = CertificationsFactory(
-        certificationDataSource: dataSourceFactory.certificationDataSource()
-    )
-
-    init(dataSourceFactory: DataSourceFactory = DataSourceFactory()) {
+    init(dataSourceFactory: DataSourceFactory) {
         self.dataSourceFactory = dataSourceFactory
     }
 
-    func fetchMovieCertificationsUseCase() -> some FetchMovieCertificationsUseCase {
-        certificationsFactory.fetchMovieCertificationsUseCase()
-    }
+    var certifications: CertificationsDomainFactory {
+        let certificationDataSource = dataSourceFactory.certifications.certificationDataSource()
 
-    func fetchTVSeriesCertificationsUseCase() -> some FetchTVSeriesCertificationsUseCase {
-        certificationsFactory.fetchTVSeriesCertificationsUseCase()
+        return CertificationsDomainFactory(certificationDataSource: certificationDataSource)
     }
 
 }
