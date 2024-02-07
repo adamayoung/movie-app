@@ -33,7 +33,7 @@ RUN swift build -c release \
 WORKDIR /staging
 
 # Copy main executable to staging area
-RUN cp "$(swift build --package-path /build -c release --show-bin-path)/App" ./
+RUN cp "$(swift build --package-path /build -c release --show-bin-path)/MovieApp" ./
 
 # Copy static swift backtracer binary to staging area
 RUN cp "/usr/libexec/swift/linux/swift-backtrace-static" ./
@@ -60,7 +60,7 @@ RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
       ca-certificates \
       tzdata \
 # If your app or its dependencies import FoundationNetworking, also install `libcurl4`.
-      # libcurl4 \
+      libcurl4 \
 # If your app or its dependencies import FoundationXML, also install `libxml2`.
       # libxml2 \
     && rm -r /var/lib/apt/lists/*
@@ -84,5 +84,5 @@ USER vapor:vapor
 EXPOSE 8080
 
 # Start the Vapor service when the image is run, default to listening on 8080 in production environment
-ENTRYPOINT ["./App"]
+ENTRYPOINT ["./MovieApp"]
 CMD ["serve", "--env", "production", "--hostname", "0.0.0.0", "--port", "8080"]

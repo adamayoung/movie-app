@@ -1,0 +1,54 @@
+{
+  "configurations" : [
+    {
+      "id" : "46464CDF-5EE9-47DF-A2E2-65044724C8EB",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "language" : "en-GB",
+    "region" : "GB",
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "MovieAppTests",
+        "name" : "MovieAppTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "MovieAPITests",
+        "name" : "MovieAPITests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "MovieDataTests",
+        "name" : "MovieDataTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "MovieDomainTests",
+        "name" : "MovieDomainTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "MovieWebTests",
+        "name" : "MovieWebTests"
+      }
+    }
+  ],
+  "version" : 1
+}
