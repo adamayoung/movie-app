@@ -43,14 +43,14 @@ public struct CertificationsController: RouteCollection {
         let certifications = try await fetchMovieCertificationsUseCase.execute()
         let certificationsContext = CertificationsContextMapper.map(certifications)
 
-        return try await request.view.render("certifications/certifications-list", certificationsContext)
+        return try await request.view.render("certifications-list", certificationsContext)
     }
 
     func showTVSeries(request: Request) async throws -> View {
         let certifications = try await fetchTVSeriesCertificationsUseCase.execute()
         let certificationsContext = CertificationsContextMapper.map(certifications)
 
-        return try await request.view.render("certifications/certifications-list", certificationsContext)
+        return try await request.view.render("certifications-list", certificationsContext)
     }
 
 }

@@ -29,7 +29,7 @@ public struct HomeController: RouteCollection {
     }
 
     func index(request: Request) async throws -> View {
-        try await request.view.render("home/home")
+        try await request.view.render("home")
     }
 
 }
