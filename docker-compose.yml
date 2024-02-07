@@ -16,6 +16,7 @@ version: '3.7'
 
 x-shared_environment: &shared_environment
   LOG_LEVEL: ${LOG_LEVEL:-debug}
+  TMDB_API_KEY: cf458964ba75aa9d53a21578df3747ed
   
 services:
   app:
