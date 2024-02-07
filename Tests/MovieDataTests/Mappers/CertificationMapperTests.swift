@@ -1,5 +1,5 @@
 //
-//  MovieDomainTests.swift
+//  CertificationMapperTests.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,11 +17,25 @@
 //  limitations under the License.
 //
 
-@testable import MovieDomain
+@testable import MovieData
+import MovieDomain
+import TMDb
 import XCTest
 
-final class MovieDomainTests: XCTestCase {
+final class CertificationMapperTests: XCTestCase {
 
-    func test() {}
+    func testMap() {
+        let tmdbCertification = TMDb.Certification(
+            code: "ABC",
+            meaning: "Some meaning",
+            order: 2
+        )
+
+        let result = CertificationMapper.map(tmdbCertification)
+
+        XCTAssertEqual(result.code, tmdbCertification.code)
+        XCTAssertEqual(result.meaning, tmdbCertification.meaning)
+        XCTAssertEqual(result.meaning, tmdbCertification.meaning)
+    }
 
 }

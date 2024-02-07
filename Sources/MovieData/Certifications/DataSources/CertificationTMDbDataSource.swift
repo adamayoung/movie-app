@@ -23,14 +23,14 @@ import TMDb
 
 public class CertificationTMDbDataSource: CertificationDataSource {
 
-    private let certificationService: any CertificationTMDbService
+    private let certificationProvider: any TMDbCertificationProvider
 
-    public init(certificationService: some CertificationTMDbService) {
-        self.certificationService = certificationService
+    public init(certificationProvider: some TMDbCertificationProvider) {
+        self.certificationProvider = certificationProvider
     }
 
     public func movieCertifications() async throws -> [String: [MovieDomain.Certification]] {
-        let dataModels = try await certificationService.movieCertifications()
+        let dataModels = try await certificationProvider.movieCertifications()
 
         let models = CertificationsMapper.map(dataModels)
 
@@ -38,7 +38,7 @@ public class CertificationTMDbDataSource: CertificationDataSource {
     }
 
     public func tvSeriesCertifications() async throws -> [String: [MovieDomain.Certification]] {
-        let dataModels = try await certificationService.tvSeriesCertifications()
+        let dataModels = try await certificationProvider.tvSeriesCertifications()
 
         let models = CertificationsMapper.map(dataModels)
 

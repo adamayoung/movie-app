@@ -8,6 +8,10 @@ let package = Package(
         .macOS(.v13)
     ],
 
+    products: [
+        .executable(name: "App", targets: ["App"])
+    ],
+
     dependencies: [
         .package(url: "https://github.com/vapor/vapor.git", from: "4.89.0"),
         .package(url: "https://github.com/vapor/leaf.git", from: "4.0.0"),
@@ -63,7 +67,8 @@ let package = Package(
             dependencies: [
                 .target(name: "MovieWeb"),
                 .product(name: "XCTVapor", package: "vapor"),
-                .product(name: "Vapor", package: "vapor")
+                .product(name: "Vapor", package: "vapor"),
+                .product(name: "Leaf", package: "leaf")
             ]
         ),
 
@@ -87,7 +92,9 @@ let package = Package(
         .testTarget(
             name: "MovieDataTests",
             dependencies: [
-                .target(name: "MovieData")
+                "MovieData",
+                "MovieDomain",
+                "TMDb"
             ]
         )
     ]

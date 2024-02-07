@@ -1,5 +1,5 @@
 //
-//  DataSourceFactory.swift
+//  FetchTVSeriesCertificationsStubUseCase.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -18,22 +18,18 @@
 //
 
 import Foundation
-import MovieData
-import MovieDomain
-import TMDb
+@testable import MovieDomain
 
-final class DataSourceFactory {
+final class FetchTVSeriesCertificationsStubUseCase: FetchTVSeriesCertificationsUseCase {
 
-    func certificationDataSource() -> some CertificationDataSource {
-        CertificationTMDbDataSource(certificationProvider: tmdbCertificationProvider())
-    }
+    var result: Result<[String: [Certification]], Error>?
 
-}
+    func execute() async throws -> [String: [Certification]] {
+        guard let result else {
+            preconditionFailure("result not set")
+        }
 
-extension DataSourceFactory {
-
-    private func tmdbCertificationProvider() -> some TMDbCertificationProvider {
-        CertificationService()
+        return try result.get()
     }
 
 }

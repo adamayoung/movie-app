@@ -1,5 +1,5 @@
 //
-//  MovieWebTests.swift
+//  HomeController.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,11 +17,19 @@
 //  limitations under the License.
 //
 
-@testable import MovieWeb
-import XCTVapor
+import MovieDomain
+import Vapor
 
-final class MovieWebTests: XCTestCase {
+public struct HomeController: RouteCollection {
 
-    func testHelloWorld() async throws {}
+    public init() {}
+
+    public func boot(routes: RoutesBuilder) throws {
+        routes.get(use: index)
+    }
+
+    func index(request: Request) async throws -> View {
+        try await request.view.render("home/home")
+    }
 
 }

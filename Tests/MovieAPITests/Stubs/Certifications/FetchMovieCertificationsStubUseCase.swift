@@ -1,5 +1,5 @@
 //
-//  CertificationTMDbService.swift
+//  FetchMovieCertificationsStubUseCase.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -18,14 +18,18 @@
 //
 
 import Foundation
-import TMDb
+@testable import MovieDomain
 
-public protocol CertificationTMDbService {
+final class FetchMovieCertificationsStubUseCase: FetchMovieCertificationsUseCase {
 
-    func movieCertifications() async throws -> [String: [Certification]]
+    var result: Result<[String: [Certification]], Error>?
 
-    func tvSeriesCertifications() async throws -> [String: [Certification]]
+    func execute() async throws -> [String: [Certification]] {
+        guard let result else {
+            preconditionFailure("result not set")
+        }
+
+        return try result.get()
+    }
 
 }
-
-extension CertificationService: CertificationTMDbService {}

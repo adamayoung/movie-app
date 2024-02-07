@@ -1,5 +1,5 @@
 //
-//  DataSourceFactory.swift
+//  TMDbCertificationProvider.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -18,22 +18,14 @@
 //
 
 import Foundation
-import MovieData
-import MovieDomain
 import TMDb
 
-final class DataSourceFactory {
+public protocol TMDbCertificationProvider {
 
-    func certificationDataSource() -> some CertificationDataSource {
-        CertificationTMDbDataSource(certificationProvider: tmdbCertificationProvider())
-    }
+    func movieCertifications() async throws -> [String: [Certification]]
 
-}
-
-extension DataSourceFactory {
-
-    private func tmdbCertificationProvider() -> some TMDbCertificationProvider {
-        CertificationService()
-    }
+    func tvSeriesCertifications() async throws -> [String: [Certification]]
 
 }
+
+extension CertificationService: TMDbCertificationProvider {}

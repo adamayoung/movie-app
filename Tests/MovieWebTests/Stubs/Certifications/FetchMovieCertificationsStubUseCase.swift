@@ -1,5 +1,5 @@
 //
-//  APITests.swift
+//  FetchMovieCertificationsStubUseCase.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,20 +17,19 @@
 //  limitations under the License.
 //
 
-@testable import MovieAPI
-import XCTVapor
+import Foundation
+@testable import MovieDomain
 
-final class APITests: XCTestCase {
+final class FetchMovieCertificationsStubUseCase: FetchMovieCertificationsUseCase {
 
-    func testHelloWorld() async throws {
-//        let app = Application(.testing)
-//        defer { app.shutdown() }
-//        try await configure(app)
-//
-//        try app.test(.GET, "hello", afterResponse: { res in
-//            XCTAssertEqual(res.status, .ok)
-//            XCTAssertEqual(res.body.string, "Hello, world!")
-//        })
+    var result: Result<[String: [Certification]], Error>?
+
+    func execute() async throws -> [String: [Certification]] {
+        guard let result else {
+            preconditionFailure("result not set")
+        }
+
+        return try result.get()
     }
 
 }

@@ -1,5 +1,5 @@
 //
-//  MovieDataTests.swift
+//  FetchTVSeriesCertificationsStubUseCase.swift
 //  Movie API
 //
 //  Copyright © 2024 Adam Young.
@@ -17,11 +17,19 @@
 //  limitations under the License.
 //
 
-@testable import MovieData
-import XCTest
+import Foundation
+@testable import MovieDomain
 
-final class MovieDataTests: XCTestCase {
+final class FetchTVSeriesCertificationsStubUseCase: FetchTVSeriesCertificationsUseCase {
 
-    func test() {}
+    var result: Result<[String: [Certification]], Error>?
+
+    func execute() async throws -> [String: [Certification]] {
+        guard let result else {
+            preconditionFailure("result not set")
+        }
+
+        return try result.get()
+    }
 
 }
